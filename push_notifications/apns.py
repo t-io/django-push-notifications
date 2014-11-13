@@ -216,7 +216,7 @@ def apns_send_bulk_message(registration_ids, alert, **kwargs):
 	to this for silent notifications.
 	"""
 	with closing(_apns_create_socket_to_push()) as socket:
-		for identifier, registration_id in enumerate(registration_ids):
+		for registration_id, identifier in registration_ids:
 			_apns_send(registration_id, alert, identifier=identifier, socket=socket, **kwargs)
 
 

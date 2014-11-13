@@ -72,7 +72,7 @@ class APNSDeviceQuerySet(models.query.QuerySet):
 	def send_message(self, message, **kwargs):
 		if self:
 			from .apns import apns_send_bulk_message
-			return apns_send_bulk_message(registration_ids=list(self.values_list("registration_id", flat=True)), alert=message, **kwargs)
+			return apns_send_bulk_message(registration_ids=list(self.values_list("registration_id", "id")), alert=message, **kwargs)
 
 
 class APNSDevice(Device):
@@ -88,7 +88,7 @@ class APNSDevice(Device):
 	def send_message(self, message, **kwargs):
 		from .apns import apns_send_message
 
-		return apns_send_message(registration_id=self.registration_id, alert=message, **kwargs)
+		return apns_send_message(registration_id=self.registration_id,identifier=self.id, alert=message, **kwargs)
 
 
 # This is an APNS-only function right now, but maybe GCM will implement it
