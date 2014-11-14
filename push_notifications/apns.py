@@ -218,6 +218,7 @@ def apns_send_bulk_message(registration_ids, alert, **kwargs):
 	with closing(_apns_create_socket_to_push()) as socket:
 		for registration_id, identifier in registration_ids:
 			_apns_send(registration_id, alert, identifier=identifier, socket=socket, **kwargs)
+		_apns_check_errors(socket)
 
 
 def apns_fetch_inactive_ids():
